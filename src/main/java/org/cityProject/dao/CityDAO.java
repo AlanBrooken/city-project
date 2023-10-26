@@ -15,18 +15,14 @@ public class CityDAO {
     }
 
     public List<City> getItems(int offset, int limit) {
-        try (Session session = sessionFactory.getCurrentSession()) {
-            Query<City> query = session.createQuery("select c from City c", City.class);
-            query.setFirstResult(offset);
-            query.setMaxResults(limit);
-            return query.getResultList();
-        }
+        Query<City> query = sessionFactory.getCurrentSession().createQuery("select c from City c", City.class);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+        return query.list();
     }
 
-    public int getTotal() {
-        try(Session session = sessionFactory.getCurrentSession()) {
-            Query<Integer> query = session.createQuery("select count(c) from City c", Integer.class);
-            return query.getSingleResult();
-        }
+    public int getTotalCount() {
+        Query<Long> query = sessionFactory.getCurrentSession().createQuery("select count(c) from City c", Long.class);
+        return Math.toIntExact(query.uniqueResult());
     }
 }

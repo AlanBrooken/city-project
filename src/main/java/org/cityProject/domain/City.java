@@ -1,6 +1,7 @@
 package org.cityProject.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import static io.lettuce.core.GeoArgs.Unit.m;
 
@@ -9,27 +10,19 @@ import static io.lettuce.core.GeoArgs.Unit.m;
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Integer id;
-
-    @Column(name = "Name")
+    private int id;
     private String name;
-
-    @Column(name = "District")
-    private String district;
-
-    @Column(name = "Population")
-    private Integer population;
-
-    @ManyToOne()
-    @JoinColumn(name = "CountryCode", referencedColumnName = "code")
+    @ManyToOne
+    @JoinColumn(name = "country_id")
     private Country country;
+    private String district;
+    private int population;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,6 +34,13 @@ public class City {
         this.name = name;
     }
 
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
     public String getDistrict() {
         return district;
@@ -50,19 +50,11 @@ public class City {
         this.district = district;
     }
 
-    public Integer getPopulation() {
+    public int getPopulation() {
         return population;
     }
 
-    public void setPopulation(Integer population) {
+    public void setPopulation(int population) {
         this.population = population;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
     }
 }

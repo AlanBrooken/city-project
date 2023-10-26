@@ -1,6 +1,8 @@
 package org.cityProject.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,59 +10,47 @@ import java.util.List;
 @Entity
 @Table(name = "country", schema = "world")
 public class Country {
-
     @Id
-    @Column(name = "Code", length = 3)
+    @Column(name = "id")
+    private int id;
     private String code;
-
-    @Column(name = "Name")
+    @Column(name = "code_2")
+    private String alternativeCode;
     private String name;
-
-    @Column(name = "Continent")
+    @Enumerated(EnumType.ORDINAL)
     private Continent continent;
-
-    @Column(name = "Region")
     private String region;
-
-    @Column(name = "SurfaceArea")
+    @Column(name = "surface_area")
     private BigDecimal surfaceArea;
-
-    @Column(name = "IndepYear")
+    @Column(name = "indep_year")
     private Short independenceYear;
-
-    @Column(name = "Population")
-    private Integer population;
-
-    @Column(name = "LifeExpectancy")
+    private int population;
+    @Column(name = "life_expectancy")
     private BigDecimal lifeExpectancy;
-
-    @Column(name = "GNP")
-    private BigDecimal gnp;
-
-    @Column(name = "GNPOld")
-    private BigDecimal gnpOld;
-
-    @Column(name = "LocalName")
+    @Column(name = "gnp")
+    private BigDecimal GNP;
+    @Column(name = "gnpo_id")
+    private BigDecimal GNPOId;
+    @Column(name = "local_name")
     private String localName;
-
-    @Column(name = "GovernmentForm")
+    @Column(name = "government_form")
     private String governmentForm;
-
-    @Column(name = "HeadOfState")
+    @Column(name = "head_of_state")
     private String headOfState;
-
     @OneToOne(fetch = FetchType.LAZY)
-    @Column(name = "Capital")
-    private City capital;
-
-    @Column(name = "Code2")
-    private String code2;
-
-    @OneToMany(mappedBy = "country")
-    private List<City> cities;
-
-    @OneToMany(mappedBy = "country",fetch = FetchType.EAGER)
+    @JoinColumn(name = "capital")
+    private City city;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "country_id")
     private List<CountryLanguage> languages;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;
@@ -68,6 +58,14 @@ public class Country {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getAlternativeCode() {
+        return alternativeCode;
+    }
+
+    public void setAlternativeCode(String alternativeCode) {
+        this.alternativeCode = alternativeCode;
     }
 
     public String getName() {
@@ -106,15 +104,15 @@ public class Country {
         return independenceYear;
     }
 
-    public void setIndependenceYear(Short indepYear) {
-        this.independenceYear = indepYear;
+    public void setIndependenceYear(Short independenceYear) {
+        this.independenceYear = independenceYear;
     }
 
-    public Integer getPopulation() {
+    public int getPopulation() {
         return population;
     }
 
-    public void setPopulation(Integer population) {
+    public void setPopulation(int population) {
         this.population = population;
     }
 
@@ -126,20 +124,20 @@ public class Country {
         this.lifeExpectancy = lifeExpectancy;
     }
 
-    public BigDecimal getGnp() {
-        return gnp;
+    public BigDecimal getGNP() {
+        return GNP;
     }
 
-    public void setGnp(BigDecimal gnp) {
-        this.gnp = gnp;
+    public void setGNP(BigDecimal GNP) {
+        this.GNP = GNP;
     }
 
-    public BigDecimal getGnpOld() {
-        return gnpOld;
+    public BigDecimal getGNPOId() {
+        return GNPOId;
     }
 
-    public void setGnpOld(BigDecimal gnpOld) {
-        this.gnpOld = gnpOld;
+    public void setGNPOId(BigDecimal GNPOId) {
+        this.GNPOId = GNPOId;
     }
 
     public String getLocalName() {
@@ -166,35 +164,11 @@ public class Country {
         this.headOfState = headOfState;
     }
 
-    public City getCapital() {
-        return capital;
+    public City getCity() {
+        return city;
     }
 
-    public void setCapital(City capital) {
-        this.capital = capital;
-    }
-
-    public String getCode2() {
-        return code2;
-    }
-
-    public void setCode2(String code2) {
-        this.code2 = code2;
-    }
-
-    public List<City> getCities() {
-        return cities;
-    }
-
-    public void setCities(List<City> cities) {
-        this.cities = cities;
-    }
-
-    public List<CountryLanguage> getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(List<CountryLanguage> languages) {
-        this.languages = languages;
+    public void setCity(City city) {
+        this.city = city;
     }
 }

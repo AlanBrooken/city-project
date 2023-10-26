@@ -1,35 +1,39 @@
 package org.cityProject.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "countrylanguage", schema = "world")
+@Table(name = "country_language", schema = "world")
 public class CountryLanguage {
     @Id
-    @Column(name = "CountryCode")
-    private String countryCode;
-
-    @Column(name = "Language")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
     private String language;
-
-    @Column(name = "IsOfficial")
-    private IsOfficial isOfficial;
-
-    @Column(name = "Percentage")
+    @Column(name = "is_official", columnDefinition = "BIT")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private Boolean isOfficial;
     private BigDecimal percentage;
 
-    @ManyToOne()
-    @JoinColumn(name = "countryCode", referencedColumnName = "code")
-    private Country country;
-
-    public String getCountryCode() {
-        return countryCode;
+    public int getId() {
+        return id;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     public String getLanguage() {
@@ -40,12 +44,12 @@ public class CountryLanguage {
         this.language = language;
     }
 
-    public IsOfficial getIsOfficial() {
+    public Boolean getOfficial() {
         return isOfficial;
     }
 
-    public void setIsOfficial(IsOfficial isOfficial) {
-        this.isOfficial = isOfficial;
+    public void setOfficial(Boolean official) {
+        isOfficial = official;
     }
 
     public BigDecimal getPercentage() {
@@ -54,13 +58,5 @@ public class CountryLanguage {
 
     public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
     }
 }

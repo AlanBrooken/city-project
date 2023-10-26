@@ -28,8 +28,12 @@ public class Main {
         cityDAO = new CityDAO(sessionFactory);
         countryDAO = new CountryDAO(sessionFactory);
 
-        redisClient = prepareRedisClien();
+        redisClient = prepareRedisClient();
         objectMapper = new ObjectMapper();
+    }
+
+    private RedisClient prepareRedisClient() {
+        return null;
     }
 
     public static void main(String[] args) {
@@ -52,7 +56,7 @@ public class Main {
             session.beginTransaction();
 
             List<Country> countries = main.countryDAO.getAll();
-            int totalCount = cityDAO.getTotal(); //4079
+            int totalCount = cityDAO.getTotalCount(); //4079
             int step = 500;
             for (int i = 0; i < totalCount; i += step) {
                 cities.addAll(main.cityDAO.getItems(i, step));

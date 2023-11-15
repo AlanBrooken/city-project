@@ -10,7 +10,7 @@ import static io.lettuce.core.GeoArgs.Unit.m;
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
     @ManyToOne
     @JoinColumn(name = "country_id")

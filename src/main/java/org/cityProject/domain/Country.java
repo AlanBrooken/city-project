@@ -1,18 +1,15 @@
 package org.cityProject.domain;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.Type;
-
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "country", schema = "world")
 public class Country {
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
     private String code;
     @Column(name = "code_2")
     private String alternativeCode;
@@ -42,7 +39,7 @@ public class Country {
     private City city;
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
-    private List<CountryLanguage> languages;
+    private Set<CountryLanguage> languages;
 
     public int getId() {
         return id;
@@ -170,5 +167,17 @@ public class Country {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Set<CountryLanguage> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(Set<CountryLanguage> languages) {
+        this.languages = languages;
     }
 }
